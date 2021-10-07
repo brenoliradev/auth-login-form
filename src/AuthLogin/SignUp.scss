@@ -1,0 +1,25 @@
+// to stylize it
+
+* {
+    margin: 0;
+    padding: 0;
+    border-style: border-box;
+}
+
+h1 {
+    text-align: center;
+}
+
+.sign-form {
+    display: flex;
+    flex-direction: column;
+
+    text-align: center;
+}
+
+.sign-error {
+    display: flex;
+    flex-direction: column;
+
+    text-align: center;
+}
