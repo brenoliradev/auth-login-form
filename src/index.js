@@ -7,7 +7,6 @@ import SignUpForm from './AuthLogin/AuthSignUp'
 ReactDOM.render(
   <React.StrictMode>
     <div>
-      <h1>Validated Login Form</h1>
       <SignUpForm />
     </div>
   </React.StrictMode>,

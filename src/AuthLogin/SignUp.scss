@@ -1,25 +1,55 @@
-// to stylize it
-
 * {
     margin: 0;
     padding: 0;
     border-style: border-box;
 }
 
-h1 {
-    text-align: center;
+.main-cover {
+    background-color: #f2f2f2;
+    color: #020202;
+    height: 100vh;
+
+    .sign-intro-text {
+        text-align: center;
+        margin: 0 0 15px 0;
+        font-size: 45px;
+    }
+
+    .sign-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .sign-textfield {
+            padding: 9px;
+            width: 45vw;
+        }
+        
+        .sign-button {
+            width: 20vw;
+            margin-top: 15px;
+        }
+    }
 }
 
-.sign-form {
-    display: flex;
-    flex-direction: column;
+@media screen and (max-width: 800px) {
+    .main-cover {
+        .sign-intro-text {
+            padding-top: 25px !important;
+        }
 
-    text-align: center;
+        .sign-form {
+            .sign-textfield {
+                padding: 12px !important;
+                width: 90vw !important;
+            }
+            
+            .sign-button {
+                width: 85vw !important;
+                margin-top: 45px !important;
+            }
+        }
+    }
 }
 
-.sign-error {
-    display: flex;
-    flex-direction: column;
 
-    text-align: center;
-}
