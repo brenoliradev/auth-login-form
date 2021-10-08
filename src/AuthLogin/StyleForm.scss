@@ -9,23 +9,27 @@
     color: #020202;
     height: 100vh;
 
-    .sign-intro-text {
+    .form-intro-text {
         text-align: center;
-        margin: 0 0 15px 0;
         font-size: 45px;
     }
 
-    .sign-form {
+    .form-sub-text {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .form-main {
         display: flex;
         flex-direction: column;
         align-items: center;
 
-        .sign-textfield {
+        .form-textfield {
             padding: 9px;
             width: 45vw;
         }
         
-        .sign-button {
+        .form-button {
             width: 20vw;
             margin-top: 15px;
         }
@@ -34,17 +38,17 @@
 
 @media screen and (max-width: 800px) {
     .main-cover {
-        .sign-intro-text {
+        .form-intro-text {
             padding-top: 25px !important;
         }
 
-        .sign-form {
-            .sign-textfield {
+        .form-main {
+            .form-textfield {
                 padding: 12px !important;
                 width: 90vw !important;
             }
             
-            .sign-button {
+            .form-button {
                 width: 85vw !important;
                 margin-top: 45px !important;
             }
