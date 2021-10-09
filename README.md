@@ -1,9 +1,14 @@
 # Auth Logins
 
-This is a PoC and made for study authentication on forms.
+This is a POC made for study authentication on forms.
 
-Using: Formik and Yup, based on: [Documentation](https://formik.org/docs/tutorial)
+* Already using:
+  * React.js / Node.js 
+  * [Login/Register API;](https://github.com/lirbre/node-js-jwt-auth-mongodb)
+  * Yup, Formik - to verify form;
+  * Material UI and SASS - to stylize;
+  * React-router-dom; 
+  * Axios.
 
-To do: Stylize sign up and make it works with a Log In.
-
-in use => npm install express mongoose body-parser cors jsonwebtoken bcryptjs --save
+* To do: 
+  * Add a profile interface.
