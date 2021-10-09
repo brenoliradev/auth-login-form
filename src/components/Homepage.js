@@ -1,11 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import UserService from "../authLogin/authServices/user.service";
 
-function Homepage() {
-    return (
-        <div>
-            <h1>Welcome</h1>
-        </div>
-    )
-}
+const Homepage = () => {
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    UserService.getPublicContent().then(
+      (response) => {
+        setContent(response.data);
+      },
+      (error) => {
+        const _content =
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+
+        setContent(_content);
+      }
+    );
+  }, []);
+
+  return (
+    <div className="container">
+      <header className="jumbotron">
+        <h3>{content}</h3>
+      </header>
+    </div>
+  );
+};
 
 export default Homepage;

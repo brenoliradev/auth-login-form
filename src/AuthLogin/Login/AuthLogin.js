@@ -7,10 +7,13 @@ import { Button } from '@mui/material';
 import * as Yup from 'yup';
 import { PropTypes } from "prop-types";
 
+import AuthService from "../authServices/auth.service";  
+
 const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email('Invalid email address')
-      .required('Insert your email.'),  
+    username: Yup.string()
+      .min(3, 'Username is too short - should be 3 chars minimum.')
+      .required('Insert your username.')
+      .matches(/^[a-zA-Z0-9_.-]*$/, 'Username contain symbols different than: "_" "-" and "."'),
     password: Yup.string()
       .min(8, "Password is too short - should be 8 chars minimum.")
       .matches(/(?=.*[0-9])/, "Password must contain a number.")
@@ -18,100 +21,101 @@ const LoginSchema = Yup.object().shape({
       .required("Insert a password."),
   })
 
-const LoginForm = ({setToken}) => {
-    // const [SignSubmit] = useState();
+const LoginForm = (props) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
-    const [showPassword, setShowPassword] = useState(false);
-    const handleClickShowPassword = () => setShowPassword(!showPassword);
-    const handleMouseDownPassword = () => setShowPassword(!showPassword);
-  
-    const handleSign = async e => {
-      e.preventDefault();
-  
-//       const token = await signUser({
-//           SignSubmit
-//         }); 
-  
-//       setToken(token);
-    }
-  
-    const formik = useFormik({
-      initialValues: {
-        email: '',
-        password: '',
-      },
-      validationSchema: LoginSchema,
-    })
-  
-    return ( 
-      <div className="main-cover">
-        <p className="form-intro-text">Login!</p>
-        <p className="form-sub-text">made with sessionStorage*</p>
-        <div>
-          <form 
-          onSubmit={formik.handleSubmit && handleSign}
-          className="form-main">
-            <div className="form-textfield">
-              <TextField
-                id="signEmail"
-                fullWidth={true}
-                name="email"
-                type="email"
-                label="Input your email"
-                value={formik.values.email}
-                onChange={formik.handleChange}   
-                onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email)}    
-                helperText={formik.touched.email && formik.errors.email}
-              />
-            </div>
-            <div className="form-textfield">
-              <TextField
-                id="signPassword"
-                name="password"
-                type={showPassword ? "text" : "password" }
-                label="Input your password"
-                value={formik.values.password}
-                onChange={formik.handleChange} 
-                onBlur={formik.handleBlur}
-                error={formik.touched.password && Boolean(formik.errors.password)}    
-                helperText={formik.touched.password && formik.errors.password}
-                fullWidth={true}
-                InputProps={{ // <-- This is where the toggle button is added.
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }}
-              />
-            </div>
-            
-            <div className="form-button">
-              <Button 
-              color="primary" 
-              variant="contained" 
-              fullWidth={true}
-              type="submit"
-              disabled={!(formik.isValid && formik.dirty)}
-              >
-                Submit
-              </Button>
-            </div>
-          </form>
-        </div>
-      </div>
+  const [loading, setLoading] = useState(false)
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [successful, setSuccessful] = useState(false);
+    const [message, setMessage] = useState("");
+
+  const handleLogin = e => {
+    e.preventDefault();
+
+    setMessage("");
+    setLoading(true);
+    
+    AuthService.login(username, password).then(
+      () => {
+        props.history.push("/profile");
+        window.location.reload();
+      }
     )
-  };
-  
-  LoginForm.propTypes = {
-    setToken: PropTypes.func.isRequired
   }
   
-  export default LoginForm;
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    validationSchema: LoginSchema,
+  })
+
+  return ( 
+    <div className="main-cover">
+      <p className="form-intro-text">Login!</p>
+      <div>
+        <form 
+        onSubmit={formik.handleSubmit && handleLogin}
+        className="form-main">
+          <div className="form-textfield">
+            <TextField
+              fullWidth={true}
+              name="username"
+              type="text"
+              label="Input your usernmae"
+              value={formik.values.username}
+              onChange={formik.handleChange}   
+              onBlur={formik.handleBlur}
+              error={formik.touched.username && Boolean(formik.errors.username)}    
+              helperText={formik.touched.username && formik.errors.username}
+            />
+          </div>
+          <div className="form-textfield">
+            <TextField
+              name="password"
+              type={showPassword ? "text" : "password" }
+              label="Input your password"
+              value={formik.values.password}
+              onChange={formik.handleChange} 
+              onBlur={formik.handleBlur}
+              error={formik.touched.password && Boolean(formik.errors.password)}    
+              helperText={formik.touched.password && formik.errors.password}
+              fullWidth={true}
+              InputProps={{ // <-- This is where the toggle button is added.
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
+            />
+          </div>
+          
+          <div className="form-button">
+            <Button 
+            color="primary" 
+            variant="contained" 
+            fullWidth={true}
+            type="submit"
+            disabled={!(formik.isValid && formik.dirty)}
+            >
+              Submit
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+};
+  
+export default LoginForm;

@@ -1,37 +1,27 @@
 import React, {useState} from 'react'
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import SignUpForm from './AuthLogin/SignUp/AuthSignUp'
-import LoginForm from './AuthLogin/Login/AuthLogin'
-import Homepage from './components/Homepage'
-
-import SignToken from './AuthLogin/SignUp/SignToken';
+import RegisterForm from './authLogin/signup/authRegister'
+import LoginForm from './authLogin/login/authLogin'
+import Profile from './components/profile'
+import Homepage from './components/homepage'
 
 import './App.scss';
-import './AuthLogin/StyleForm.scss'
-
-function getToken() {
-  const tokenStringSign = sessionStorage.getItem('SignSession');
-  const userTokenSign = JSON.parse(tokenStringSign);
-  return userTokenSign?.SignSession
-}
+import './index.scss'
+import './authLogin/styleForm.scss'
   
 function App() {
-  const tokenLogin = sessionStorage.getItem("LoginSession")
-  const {tokenSign, setTokenSign} = SignToken()
-
-if (!tokenSign) {
-  return <SignUpForm setTokenSign={setTokenSign}/>
-} 
-if (!tokenLogin) {
-  return <LoginForm/>
-}
-
 return (
   <div className="main-wrapper">
   <BrowserRouter>
     <Switch>
-      <Route path="/signup">
-        <SignUpForm />
+      <Route path="/register">
+        <RegisterForm />
+      </Route>
+      <Route path="/login">
+        <LoginForm />
+      </Route>
+      <Route path="/profile">
+        <Profile />
       </Route>
       <Route path="/">
         <Homepage />
