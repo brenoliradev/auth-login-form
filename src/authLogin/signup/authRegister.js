@@ -5,22 +5,22 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { Button } from '@mui/material';
 import * as Yup from 'yup';
-import { PropTypes } from "prop-types";
 
 import AuthService from "../authServices/auth.service";  
+import { useHistory } from 'react-router';
   
   const registerSchema = Yup.object().shape({
     firstName: Yup.string()
       .max(15, 'Must be 15 characters or less')
       .required('Insert your name.')
       .matches(/^[a-zA-Z]/, 'Name must contain only letters.'),
+    email: Yup.string()
+      .email('Invalid email address')
+      .required('Insert your email.'),  
     username: Yup.string()
       .min(3, 'Username is too short - should be 3 chars minimum.')
       .required('Insert your username.')
       .matches(/^[a-zA-Z0-9_.-]*$/, 'Username contains symbols different than: "_" "-" and "."'),
-    email: Yup.string()
-      .email('Invalid email address')
-      .required('Insert your email.'),  
     password: Yup.string()
       .min(8, "Password is too short - should be 8 chars minimum.")
       .matches(/(?=.*[0-9])/, "Password must contain a number.")
@@ -34,6 +34,8 @@ import AuthService from "../authServices/auth.service";
   })
 
 const RegisterForm = (props) => {  
+  const history = useHistory();
+
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
@@ -45,23 +47,32 @@ const RegisterForm = (props) => {
     e.preventDefault();
 
     const firstName =formik.values.firstName;
+    const email = formik.values.email;
     const username = formik.values.username;
-    const email = formik.values.username;
     const password = formik.values.password;
 
-    AuthService.register(firstName, username, email, password).then(
-      (response) => {
+    AuthService.register(firstName, username, email, password)
+    .then(
+      response => {
         setMessage(response.data.message);
         setSuccessful(true);
-      }
-    );
+        history.push({
+          pathname:  "/profile",
+          state: {
+            response: response.data.message
+          } 
+        })
+        document.location.reload(true);
+      }, error => {
+        alert("User already signed!")
+      })
   }
 
   const formik = useFormik({
     initialValues: {
       firstName: '',
-      username: '',
       email: '',
+      username: '',
       password: '',
       passwordConfirmation: '',
     },
@@ -71,7 +82,6 @@ const RegisterForm = (props) => {
   return ( 
     <div className="main-cover">
       <p className="form-intro-text">Register!</p>
-      <div>
         <form 
         onSubmit={formik.handleSubmit && handleRegister}
         className="form-main">
@@ -79,6 +89,7 @@ const RegisterForm = (props) => {
             <TextField
               fullWidth={true}
               name="firstName"
+              type="text"
               label="Input your first name"
               value={formik.values.firstName}
               onChange={formik.handleChange}   
@@ -86,19 +97,7 @@ const RegisterForm = (props) => {
               error={formik.touched.firstName && Boolean(formik.errors.firstName)}    
               helperText={formik.touched.firstName && formik.errors.firstName}
             />
-          </div>         
-          <div className="form-textfield">
-            <TextField
-              fullWidth={true}
-              name="username"
-              label="Input your username"
-              value={formik.values.username}
-              onChange={formik.handleChange}   
-              onBlur={formik.handleBlur}
-              error={formik.touched.username && Boolean(formik.errors.username)}    
-              helperText={formik.touched.username && formik.errors.username}
-            />
-          </div>
+          </div> 
           <div className="form-textfield">
             <TextField
               fullWidth={true}
@@ -110,6 +109,19 @@ const RegisterForm = (props) => {
               onBlur={formik.handleBlur}
               error={formik.touched.email && Boolean(formik.errors.email)}    
               helperText={formik.touched.email && formik.errors.email}
+            />
+          </div>        
+          <div className="form-textfield">
+            <TextField
+              fullWidth={true}
+              name="username"
+              type="text"
+              label="Input your username"
+              value={formik.values.username}
+              onChange={formik.handleChange}   
+              onBlur={formik.handleBlur}
+              error={formik.touched.username && Boolean(formik.errors.username)}    
+              helperText={formik.touched.username && formik.errors.username}
             />
           </div>
           <div className="form-textfield">
@@ -176,8 +188,9 @@ const RegisterForm = (props) => {
               Submit
             </Button>
           </div>
+
         </form>
-      </div>
+      <p className="redirect-text"><a href="/profile">I already have an account</a></p>
     </div>
   )
 };

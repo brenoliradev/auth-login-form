@@ -21,7 +21,7 @@
         align-items: center;
 
         .form-textfield {
-            padding: 9px;
+            padding-bottom: 9px;
             width: 45vw;
         }
         
@@ -29,6 +29,16 @@
             width: 20vw;
             margin-top: 15px;
             padding-bottom: 15px;
+        }
+    }
+
+    .redirect-text {
+        text-align: center;
+        padding-bottom: 15px;
+
+        a {
+        text-decoration: none;
+        color: #020202;
         }
     }
 }
@@ -41,7 +51,7 @@
 
         .form-main {
             .form-textfield {
-                padding: 12px !important;
+                padding-bottom: 12px !important;
                 width: 90vw !important;
             }
             

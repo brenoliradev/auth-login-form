@@ -5,8 +5,8 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { Button } from '@mui/material';
 import * as Yup from 'yup';
-import { PropTypes } from "prop-types";
 
+import { useHistory } from "react-router";
 import AuthService from "../authServices/auth.service";  
 
 const LoginSchema = Yup.object().shape({
@@ -22,26 +22,38 @@ const LoginSchema = Yup.object().shape({
   })
 
 const LoginForm = (props) => {
+  const history = useHistory();
+
+  // password visibility icon
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   const [loading, setLoading] = useState(false)
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
-    const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleLogin = e => {
     e.preventDefault();
 
     setMessage("");
     setLoading(true);
+
+    const username = formik.values.username;
+    const password = formik.values.password;
     
-    AuthService.login(username, password).then(
-      () => {
-        props.history.push("/profile");
-        window.location.reload();
+    AuthService.login(username, password)
+    .then(
+      response => {
+        history.push({
+          pathname:  "/profile",
+          state: {
+            response: message
+          } 
+        })
+        document.location.reload(true);
+      }, error => {
+        alert("Incorret password or username!")
       }
     )
   }
@@ -112,7 +124,9 @@ const LoginForm = (props) => {
               Submit
             </Button>
           </div>
+
         </form>
+        <p className="redirect-text"><a href="/register">I don't have an account</a></p>
       </div>
     </div>
   )

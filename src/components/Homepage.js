@@ -22,7 +22,7 @@ const Homepage = () => {
 
   return (
     <div className="container">
-      <header className="jumbotron">
+      <header>
         <h3>{content}</h3>
       </header>
     </div>

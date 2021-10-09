@@ -1,8 +1,15 @@
 import React from 'react';
 import AuthService from "../authLogin/authServices/auth.service";
+import LoginForm from '../authLogin/login/authLogin'
 
 function Profile() {
 const currentUser = AuthService.getCurrentUser();
+
+    if (currentUser === null) {
+        return (
+            <LoginForm />
+        )
+    }
 
     return (
         <div>
