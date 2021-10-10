@@ -190,7 +190,8 @@ const RegisterForm = (props) => {
           </div>
 
         </form>
-      <p className="redirect-text"><a href="/profile">I already have an account</a></p>
+        <p className="redirect-text"><a href="/profile">I already have an account</a></p>
+
     </div>
   )
 };
