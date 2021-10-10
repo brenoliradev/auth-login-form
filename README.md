@@ -8,7 +8,6 @@ This is a POC made for study authentication on forms.
   * React-router-dom; 
   * Axios.
 
-* Status:
-    * This project is finished, but:
-        * Waiting a code review to upgrade what is able.
-        * Waiting to deploy it.
+* This project is finished, but:
+  * Waiting a code review to upgrade what is able;
+  * Waiting to deploy it.
