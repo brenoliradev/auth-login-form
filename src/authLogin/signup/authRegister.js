@@ -13,7 +13,7 @@ import { useHistory } from 'react-router';
     firstName: Yup.string()
       .max(15, 'Must be 15 characters or less')
       .required('Insert your name.')
-      .matches(/^[a-zA-Z]/, 'Name must contain only letters.'),
+      .matches(/^[a-zA-Z]*$/, 'Name must contain only letters.'),
     email: Yup.string()
       .email('Invalid email address')
       .required('Insert your email.'),  
