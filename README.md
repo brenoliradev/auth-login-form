@@ -9,5 +9,5 @@ This is a POC made for study authentication on forms.
   * Axios.
 
 * This project is finished, but:
-  * Waiting a code review to upgrade what is able;
+  * Waiting a code review to upgrade it;
   * Waiting to deploy it.
