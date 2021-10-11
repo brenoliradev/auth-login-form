@@ -64,7 +64,13 @@ const RegisterForm = (props) => {
         })
         document.location.reload(true);
       }, error => {
-        alert("User already signed!")
+        const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString()
+        alert(resMessage)
       })
   }
 

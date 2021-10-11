@@ -30,7 +30,6 @@ const LoginForm = (props) => {
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   const [loading, setLoading] = useState(false)
-  const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
   const handleLogin = e => {
@@ -53,8 +52,15 @@ const LoginForm = (props) => {
         })
         document.location.reload(true);
       }, error => {
-        alert("Incorret password or username!")
-      }
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+          error.toString();
+
+          alert(resMessage)
+        }
     )
   }
   
