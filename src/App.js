@@ -8,6 +8,7 @@ import Homepage from './components/homepage/homepage'
 import './App.scss';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import './components/forms.scss'
 import './index.scss';
 =======
@@ -18,6 +19,10 @@ import './authLogin/styleForm.scss'
 import './index.scss'
 import './authLogin/styleForm.scss'
 >>>>>>> parent of 749e7f4 (test heroku)
+=======
+import './components/forms.scss'
+import './index.scss';
+>>>>>>> parent of af09a31 (revert)
   
 function App() {
   return (
