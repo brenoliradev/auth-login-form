@@ -5,7 +5,7 @@ import LoginForm from './authLogin/login/authLogin'
 import Profile from './components/profile/profile'
 import Homepage from './components/homepage/homepage'
 
-import './app.scss';
+import './App.scss';
 import './components/forms.scss'
 import './index.scss';
   
