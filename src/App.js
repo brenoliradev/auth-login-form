@@ -5,9 +5,9 @@ import LoginForm from './authLogin/login/authLogin'
 import Profile from './components/profile/profile'
 import Homepage from './components/homepage/homepage'
 
-import './App.scss';
-import './index.scss'
-import './authLogin/styleForm.scss'
+import './app.scss';
+import './components/forms.scss'
+import './index.scss';
   
 function App() {
   return (
