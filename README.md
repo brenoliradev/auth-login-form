@@ -1,4 +1,4 @@
-This is a POC made for study authentication on forms.
+This is a POC made for study authentication on validated forms.
 
 * Already using:
   * React.js / Node.js 
