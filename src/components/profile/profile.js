@@ -1,6 +1,6 @@
 import React from 'react';
-import AuthService from "../../authLogin/authServices/auth.service";
-import LoginForm from '../../authLogin/login/authLogin'
+import AuthService from "../../authForms/authServices/auth.service";
+import LoginForm from '../../authForms/login/authLogin'
 import { Button } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
