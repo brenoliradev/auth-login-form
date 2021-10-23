@@ -32,9 +32,7 @@ const LoginForm = (props) => {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("");
 
-  const handleLogin = e => {
-    e.preventDefault();
-
+  const handleLogin = () => {
     setMessage("");
     setLoading(true);
 
@@ -50,6 +48,7 @@ const LoginForm = (props) => {
             response: message
           } 
         })
+        formik.resetForm();
         document.location.reload(true);
       }, error => {
           const resMessage =
@@ -70,6 +69,9 @@ const LoginForm = (props) => {
       password: '',
     },
     validationSchema: LoginSchema,
+    onSubmit: (values) => {
+      handleLogin();
+    }
   })
 
   return ( 
@@ -77,8 +79,9 @@ const LoginForm = (props) => {
       <p className="form-intro-text">Login!</p>
       <div>
         <form 
-        onSubmit={formik.handleSubmit && handleLogin}
-        className="form-main">
+          onSubmit={formik.handleSubmit}
+          className="form-main"
+        >
           <div className="form-textfield">
             <TextField
               fullWidth={true}
@@ -121,11 +124,11 @@ const LoginForm = (props) => {
           
           <div className="form-button">
             <Button 
-            color="primary" 
-            variant="contained" 
-            fullWidth={true}
-            type="submit"
-            disabled={!(formik.isValid && formik.dirty)}
+              color="primary" 
+              variant="contained" 
+              fullWidth={true}
+              type="submit"
+              disabled={!(formik.isValid && formik.dirty)}
             >
               Submit
             </Button>

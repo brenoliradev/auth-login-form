@@ -36,16 +36,18 @@ import { useHistory } from 'react-router';
 const RegisterForm = (props) => {  
   const history = useHistory();
 
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const [show1Password, setShow1Password] = useState(false);
+  const [show2Password, setShow2Password] = useState(false);
+
+  const handleClickShow1Password = () => setShow1Password(!show1Password);
+  const handleMouseDown1Password = () => setShow1Password(!show1Password);
+  const handleClickShow2Password = () => setShow2Password(!show2Password);
+  const handleMouseDown2Password = () => setShow2Password(!show2Password);
 
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
   
-  const handleRegister = e => {
-    e.preventDefault();
-
+  const handleRegister = () => {
     const firstName =formik.values.firstName;
     const email = formik.values.email;
     const username = formik.values.username;
@@ -56,6 +58,8 @@ const RegisterForm = (props) => {
       response => {
         setMessage(response.data.message);
         setSuccessful(true);
+        formik.resetForm();
+        
         history.push({
           pathname:  "/profile",
           state: {
@@ -83,14 +87,17 @@ const RegisterForm = (props) => {
       passwordConfirmation: '',
     },
     validationSchema: registerSchema,
+    onSubmit: (values) => {
+      handleRegister();
+    }
   })
 
   return ( 
     <div className="main-cover">
       <p className="form-intro-text">Register!</p>
         <form 
-        onSubmit={formik.handleSubmit && handleRegister}
-        className="form-main">
+          onSubmit={formik.handleSubmit}
+          className="form-main">
           <div className="form-textfield">
             <TextField
               fullWidth={true}
@@ -133,7 +140,7 @@ const RegisterForm = (props) => {
           <div className="form-textfield">
             <TextField
               name="password"
-              type={showPassword ? 'text' : 'password'}
+              type={show1Password ? 'text' : 'password'}
               label="Input your password"
               value={formik.values.password}
               onChange={formik.handleChange} 
@@ -146,10 +153,10 @@ const RegisterForm = (props) => {
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
+                      onClick={handleClickShow1Password}
+                      onMouseDown={handleMouseDown1Password}
                     >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                      {show1Password ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 )
@@ -159,7 +166,7 @@ const RegisterForm = (props) => {
           <div className="form-textfield">
             <TextField
               name="passwordConfirmation"
-              type={showPassword ? 'text' : 'password'}
+              type={show2Password ? 'text' : 'password'}
               label="Confirm your password"
               value={formik.values.passwordConfirmation}
               onChange={formik.handleChange} 
@@ -172,10 +179,10 @@ const RegisterForm = (props) => {
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
+                      onClick={handleClickShow2Password}
+                      onMouseDown={handleMouseDown2Password}
                     >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                      {show2Password ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 )
@@ -185,11 +192,11 @@ const RegisterForm = (props) => {
           
           <div className="form-button">
             <Button 
-            color="primary" 
-            variant="contained" 
-            fullWidth={true}
-            type="submit"
-            disabled={!(formik.isValid && formik.dirty)}
+              color="primary" 
+              variant="contained" 
+              type="submit"
+              disabled={!(formik.isValid && formik.dirty)}
+              fullWidth={true}
             >
               Submit
             </Button>
