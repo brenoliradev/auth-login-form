@@ -1,6 +1,6 @@
 import React from 'react';
-import AuthService from "../../authForms/authServices/auth.service";
-import LoginForm from '../../authForms/login/authLogin'
+import AuthService from "../authForms/authServices/auth.service";
+import LoginForm from '../authForms/login/authLogin'
 import { Button } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
@@ -28,7 +28,7 @@ const currentUser = AuthService.getCurrentUser();
     return (
         <div className="profile-div">
             <AccountCircleIcon  
-            style={styleAccount}/>
+                style={styleAccount}/>
             <header>
                 <h3>Hey! {currentUser.firstName}.</h3>
                 <h3>How are you?</h3>
@@ -42,7 +42,8 @@ const currentUser = AuthService.getCurrentUser();
                 variant="contained"
                 href="/"
                 onClick={logOut}
-            >Log Out!
+            >
+                Log Out!
             </Button>
         </div>
     );

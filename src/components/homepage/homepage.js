@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Button } from '@mui/material';
 
-import AuthService from "../../authForms/authServices/auth.service";
-import userService from "../../authForms/authServices/user.service";
+import AuthService from "../authForms/authServices/auth.service";
+import userService from "../authForms/authServices/user.service";
 import Profile from "../profile/profile";
 import './homepage.scss';
 
@@ -34,25 +34,21 @@ const Homepage = () => {
 
   const currentUser = AuthService.getCurrentUser();
 
-  if (currentUser === null) {
-    return (
-      <div className="register-div">
-        <AccountCircleIcon 
-        style={styleAccount}
-        />
-        <Button 
-        className="register-button"
-        variant="contained"
-        href="/register">
-          {content}
-        </Button>
-      </div>
-    );
-  } else {
-    return (
-      <Profile />
-    )
-  }
-} 
+  return (currentUser === null) ? (
+    <div className="register-div">
+      <AccountCircleIcon 
+      style={styleAccount}
+      />
+      <Button 
+      className="register-button"
+      variant="contained"
+      href="/register">
+        {content}
+      </Button>
+    </div>
+  ) : (
+        <Profile />
+      )
+}
 
 export default Homepage;  
